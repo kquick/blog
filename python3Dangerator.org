@@ -1,0 +1,350 @@
+* Python 3 - Iterators should be called Dangerators
+
+In the old Python 2 days, working with lists was pleasant and easy:
+
+ #+BEGIN_EXAMPLE
+ $ python
+ Python 2.7.18 (default, Apr 19 2020, 21:45:35)
+ [GCC 9.3.0] on linux2
+ Type "help", "copyright", "credits" or "license" for more information.
+ >>> a = [1,2,3]
+ >>> b = []
+ >>> len(a)
+ 3
+ >>> a[1]
+ 2
+ >>>
+ #+END_EXAMPLE
+
+Lists had implicit boolean values of false-ish for an empty list and
+truthy for a non-empty list:
+
+ #+BEGIN_EXAMPLE
+ >>> "non-empty" if a else "empty"
+ 'non-empty'
+ >>> "non-empty" if b else "empty"
+ 'empty'
+ >>>
+
+ >>> whenNonEmpty = lambda l: l if l else "empty"
+ >>> whenNonEmpty(a)
+ [1, 2, 3]
+ >>> whenNonEmpty(b)
+ "empty"
+ >>>
+ #+END_EXAMPLE
+
+ And there are some useful functions to apply over the contents of
+ lists, that work with empty and non-empty lists:
+
+ #+BEGIN_EXAMPLE
+ >>> map(chr, a)
+ ['\x01', '\x02', '\x03']
+ >>> map(chr, b)
+ []
+
+ >>> filter(None, a)
+ [1,2,3]
+ >>> filter(None, b)
+ []
+ #+END_EXAMPLE
+
+ Note also that list comprehensions are equivalent to ~map~ and ~filter~:
+
+ #+BEGIN_EXAMPLE
+ >>> map(chr, a)
+ ['\x01', '\x02', '\x03']
+ >>> [ chr(x) for x in a ]
+ ['\x01', '\x02', '\x03']
+ >>>
+
+ >>> filter(None, a)
+ [1, 2, 3]
+ >>> [ x for x in a if x is not None ]
+ [1, 2, 3]
+ >>>
+ 
+ #+END_EXAMPLE
+
+ Combining these functions (composition) is also simple and easy:
+
+ #+BEGIN_EXAMPLE
+ >>> whenNonEmpty(filter(None, map(chr, a)))
+ ['\x01', '\x02', '\x03']
+ >>> whenNonEmpty(filter(None, map(chr, b)))
+ []
+ #+END_EXAMPLE
+
+ Life was good, things worked like one would expect.
+
+*** Enter Python 3:
+
+ In Python3, ~filter~ and ~map~ (and ~reduce~) were changed to return
+ iterator objects instead of lists.  This was done for performance
+ reasons (better memory consumption, potential for lazy evaluation),
+ but it has significant, unexpected, and sometimes hidden impacts to
+ the surface functionality.
+
+ It starts out similarly:
+
+ #+BEGIN_EXAMPLE
+ $ python
+ Python 3.8.6 (default, Sep 23 2020, 13:54:27)
+ [GCC 9.3.0] on linux
+ Type "help", "copyright", "credits" or "license" for more information.
+ >>> a = [1,2,3]
+ >>> b = []
+ >>> len(a)
+ 3
+ >>> a[1]
+ 2
+ >>>
+ #+END_EXAMPLE
+
+ But using map or filter returns iterators:
+
+ #+BEGIN_EXAMPLE
+ >>> map(chr, a)
+ <map object at 0x7fcb0638f0a0>
+ # Python 2: ['\x01', '\x02', '\x03']
+ >>> map(chr, b)
+ <map object at 0x7fcb0642cb80>
+ # Python 2: []
+ >>> filter(None, a)
+ <filter object at 0x7fcb06417640>
+ # Python 2: ['\x01', '\x02', '\x03']
+ >>> filter(None, b)
+ <filter object at 0x7fcb0642cc70>
+ # Python 2: []
+ #+END_EXAMPLE
+
+ These iterator objects are *not* list containers:
+
+ #+BEGIN_EXAMPLE
+ >>> map(chr, a)[1]
+ Traceback (most recent call last):
+   File "<stdin>", line 1, in <module>
+ TypeError: 'map' object is not subscriptable
+
+ >>> len(filter(None, a))
+ Traceback (most recent call last):
+   File "<stdin>", line 1, in <module>
+ TypeError: object of type 'filter' has no len()
+ >>> 
+ #+END_EXAMPLE
+
+ To use them with list functions, they must be converted back into lists:
+
+ #+BEGIN_EXAMPLE
+ >>> list(map(chr, a))[1]
+ '\x02'
+ >>> len(list(filter(None, a)))
+ 3
+ >>>
+ #+END_EXAMPLE
+
+ This is one of the initial areas that caused problems when migrating
+ from Python2 to Python3.  So far, this was a situation that generated
+ _errors_ (hopefully during your CI if your tests were thorough
+ enough).  
+
+ However, the truthiness of iterators also changes (because it's now a
+ different object), but silently:
+
+ #+BEGIN_EXAMPLE
+ >>> "non-empty" if map(chr, a) else "empty"
+ 'non-empty'
+ # same as Python 2
+ >>> "non-empty" if map(chr, b) else "empty"
+ 'non-empty'
+ # Python 2: 'empty'  !!!
+ >>>
+ #+END_EXAMPLE
+
+ Silent behavioral changes like this are hugely problematic.  Because
+ these don't generate errors, your CI testing needs to be extremely
+ thorough to catch this type of thing... and I'm not sure many of us
+ have that high of a level of confidence in the branch coverage of our
+ tests.  In addition, I maintain that this is _unexpected and
+ surprising_ behavior to code readers.  Python has a long and broad
+ history of truthiness for objects that many Python programmers are
+ used to, but in my opinion this deviation here violates several of
+ the Zen of Python mantras (PEP-20):
+
+   * "Readability counts."
+   * "Special cases aren't special enough to break the rules."
+   * "Errors should never pass silently."
+   * "There should be one-- and preferably only one --obvious way to do it."
+   * "If the implementation is hard to explain, it's a bad idea."
+
+ I realize that you might counter here with assertions like "these
+ aren't actually errors" and "this makes total sense if you understand
+ iterators" and you're technically correct, but my position is that
+ these are subtle and therefore dangerous differences that lead to
+ unintentional programmer mistakes... which is counter to the raison
+ d'être of Python.
+
+ And it gets worse, as I shall demonstrate.
+
+ Iterators do compose:
+
+ #+BEGIN_EXAMPLE
+ >>> filter(None, map(chr, a))
+ <filter object at 0x7fcb06383730>
+ >>>
+ #+END_EXAMPLE
+
+ which perpetuates the perception that they are just like lists, but
+ this perception breaks down because it's limited to just a very few
+ special functions:
+
+ #+BEGIN_EXAMPLE
+ >>> len(filter(None, map(chr, a)))
+ Traceback (most recent call last):
+   File "<stdin>", line 1, in <module>
+ TypeError: object of type 'filter' has no len()
+ >>> len(list(filter(None, map(chr, a))))
+ 3
+ >>>
+ #+END_EXAMPLE
+
+ However, even though iterators are proxies for a list, they don't
+ replicate all the functionality of the list.
+
+ #+BEGIN_EXAMPLE
+ >>> whenNonEmpty = lambda l: l if l else "empty"
+ >>> whenNonEmpty(a)
+ [1, 2, 3]
+ >>> whenNonEmpty(b)
+ 'empty'
+
+ >>> whenNonEmpty(filter(None, map(chr, a)))
+ <filter object at 0x7fcb0642cc70>
+ >>> whenNonEmpty(filter(None, map(chr, b)))
+ <filter object at 0x7fcb0633a580>
+
+ >>> list(whenNonEmpty(filter(None, map(chr, b))))
+ []    # <<<----- what?!
+ >>> list(whenNonEmpty(filter(None, map(chr, a))))
+ ['\x01', '\x02', '\x03']
+ >>>
+ #+END_EXAMPLE
+
+ This is essentially the same thing shown previously: the ~l~
+ parameter to the ~whenNonEmpty~ is now an iterator, not a list, so
+ it's *always* "truthy", but evaluating the iterator may return a
+ false-ish object.
+
+ At this point, the developer might be tempted to fix this in the
+ ~whenNonEmpty~ lambda function, reasoning that the function should be
+ made robust to whether it's getting a collection or an iterator:
+
+ #+BEGIN_EXAMPLE
+ >>> whenNonEmptySafe = lambda l: list(l) if list(l) else "empty"
+ #+END_EXAMPLE
+
+ It's worth noting here that the benefits of having an iterator are
+ nullified, or perhaps even result in a worse situation than Python 2:
+ the input is now converted to a list twice, and these are likely to
+ be separate lists.  Perhaps the duplication could have been avoided
+ here via a local variable, but if ~l~ was passed to other functions
+ that wanted to be similarly robust to lists v.s. iterators, they
+ might create additional list copies themselves.  The result is an
+ unknown number of lists, as compared to Python2 where a single list
+ would have been passed around.  Furthermore, if the input ~l~ was
+ already a list, another list is still created by this defensive code.
+
+ However, there's an even worse issue hiding in this updated
+ ~whenNonEmptySafe~ code:
+
+ #+BEGIN_EXAMPLE
+ >>> whenNonEmptySafe(a)
+ [1, 2, 3]
+ >>> whenNonEmptySafe(b)
+ 'empty'
+
+ >>> whenNonEmptySafe(filter(None, map(chr, a)))
+ []
+ >>> whenNonEmptySafe(filter(None, map(chr, b)))
+ 'empty'
+ >>> 
+ #+END_EXAMPLE
+
+ The new ~whenNonEmptySafe~ fixed the result for the filtered and
+ mapped ~b~, but now the filtered and mapped ~a~ result is wrong!?!
+
+ The problem here is that iterators _are not values_: they are
+ suspended computations and when the computation is performed, there
+ are side-effects.  The iterator computation is *not* idempotent and
+ can only safely be performed once.
+
+ In this case, the ~... if list(l) ...~ check in ~whenNonEmptySafe~
+ correctly converts the input to a list, and correctly determines if
+ the list is empty (false-ish) or non-empty (truthy) for the if
+ decision.  However, for the truthy branch, it then tries to return
+ ~list(l)~, but the iterator has already been consumed.  The iterator
+ does not indicate that it has been consumed though by throwing an
+ error, it simply returns a default value: the empty list.
+
+ This is an extremely subtle behavior to decipher... or even detect.
+ Readers familiar with the distinction between iterators and
+ collections from other languages will be generally unsurprised by
+ this, but Python developers, while no less sophisticated, have a very
+ different expectation of their language as informed by nearly every
+ other part of that language.
+
+ Here, the ~whenNonEmptySafe~ could be re-written to only perform the
+ ~list(l)~ conversion a single time and result in the correct
+ behavior, but if the caller *also* passed this iterator to a
+ different function, that function would have no way to get the
+ correct results of the iteration.  The only _safe_ conclusion then is:
+
+  * That an iterator must be converted back to a collection at the
+    generation point, and that it should never be passed to a function
+    that is expecting a collection.
+
+  * Functions should _not_ be written defensively, allowing for both
+    iterators or collections, but should fail when provided an
+    iterator (which is not the typical perspective for a "duck-typing"
+    language).
+
+ The original ~whenNonEmpty~ definition should be used like this:
+
+ #+BEGIN_EXAMPLE
+ >>> whenNonEmpty(a)
+ [1, 2, 3]
+ >>> whenNonEmpty(b)
+ 'empty'
+
+ >>> whenNonEmpty(list(filter(None, map(chr, a))))
+ ['\x01', '\x02', '\x03']
+ >>> whenNonEmpty(list(filter(None, map(chr, b))))
+ 'empty'
+ >>> 
+ #+END_EXAMPLE
+
+ In conclusion, the iterators introduced in Python 3 as returns from
+ ~filter~, ~map~, and ~reduce~ are often very dangerous and care
+ should be taken when using them.
+
+ This is probably why the [[https://portingguide.readthedocs.io/en/latest/iterators.html][Conservative Python 3 Porting Guide]] contains
+ the following:
+
+   #+BEGIN_QUOTE
+   ... In these cases, the call can be rewritten using a list
+   comprehension, making the code faster and more readable: ...
+   #+END_QUOTE
+
+   To which I would add "and safer".  In addition, when porting from
+   Python 2 to Python 3, the guide states
+
+   #+BEGIN_QUOTE
+   When the recommneded fixers detect calls to ~map()~ or ~filter()~,
+   they add the imports ~from six.moves import filter~ or ~from
+   six.moves import map~ to the top of the file.
+
+   In many cases the fixers do a good job discerning the different
+   usages of ~map()~ and ~filter()~ and, if necessary, adding a call
+   to ~list()~.  But they are not perfect.  Always review the fixers'
+   result with the above advice in mind.
+   #+END_QUOTE
