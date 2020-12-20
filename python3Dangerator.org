@@ -1,3 +1,5 @@
+# Export via C-c C-e to html file.
+
 * Python 3 - Iterators should be called Dangerators
 
 In the old Python 2 days, working with lists was pleasant and easy:

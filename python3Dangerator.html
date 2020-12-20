@@ -1,0 +1,683 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2020-12-19 Sat 17:40 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>&lrm;</title>
+<meta name="generator" content="Org mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org1768fa9">1. Python 3 - Iterators should be called Dangerators</a>
+<ul>
+<li>
+<ul>
+<li><a href="#orge7d2450">1.0.1. Enter Python 3:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org1768fa9" class="outline-2">
+<h2 id="org1768fa9"><span class="section-number-2">1</span> Python 3 - Iterators should be called Dangerators</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+In the old Python 2 days, working with lists was pleasant and easy:
+</p>
+
+<pre class="example">
+ $ python
+ Python 2.7.18 (default, Apr 19 2020, 21:45:35)
+ [GCC 9.3.0] on linux2
+ Type "help", "copyright", "credits" or "license" for more information.
+ &gt;&gt;&gt; a = [1,2,3]
+ &gt;&gt;&gt; b = []
+ &gt;&gt;&gt; len(a)
+ 3
+ &gt;&gt;&gt; a[1]
+ 2
+ &gt;&gt;&gt;
+</pre>
+
+<p>
+Lists had implicit boolean values of false-ish for an empty list and
+truthy for a non-empty list:
+</p>
+
+<pre class="example">
+ &gt;&gt;&gt; "non-empty" if a else "empty"
+ 'non-empty'
+ &gt;&gt;&gt; "non-empty" if b else "empty"
+ 'empty'
+ &gt;&gt;&gt;
+
+ &gt;&gt;&gt; whenNonEmpty = lambda l: l if l else "empty"
+ &gt;&gt;&gt; whenNonEmpty(a)
+ [1, 2, 3]
+ &gt;&gt;&gt; whenNonEmpty(b)
+ "empty"
+ &gt;&gt;&gt;
+</pre>
+
+<p>
+And there are some useful functions to apply over the contents of
+lists, that work with empty and non-empty lists:
+</p>
+
+<pre class="example">
+ &gt;&gt;&gt; map(chr, a)
+ ['\x01', '\x02', '\x03']
+ &gt;&gt;&gt; map(chr, b)
+ []
+
+ &gt;&gt;&gt; filter(None, a)
+ [1,2,3]
+ &gt;&gt;&gt; filter(None, b)
+ []
+</pre>
+
+<p>
+Note also that list comprehensions are equivalent to <code>map</code> and <code>filter</code>:
+</p>
+
+<pre class="example">
+ &gt;&gt;&gt; map(chr, a)
+ ['\x01', '\x02', '\x03']
+ &gt;&gt;&gt; [ chr(x) for x in a ]
+ ['\x01', '\x02', '\x03']
+ &gt;&gt;&gt;
+
+ &gt;&gt;&gt; filter(None, a)
+ [1, 2, 3]
+ &gt;&gt;&gt; [ x for x in a if x is not None ]
+ [1, 2, 3]
+ &gt;&gt;&gt;
+ 
+</pre>
+
+<p>
+Combining these functions (composition) is also simple and easy:
+</p>
+
+<pre class="example">
+ &gt;&gt;&gt; whenNonEmpty(filter(None, map(chr, a)))
+ ['\x01', '\x02', '\x03']
+ &gt;&gt;&gt; whenNonEmpty(filter(None, map(chr, b)))
+ []
+</pre>
+
+<p>
+Life was good, things worked like one would expect.
+</p>
+</div>
+
+<div id="outline-container-orge7d2450" class="outline-4">
+<h4 id="orge7d2450"><span class="section-number-4">1.0.1</span> Enter Python 3:</h4>
+<div class="outline-text-4" id="text-1-0-1">
+<p>
+In Python3, <code>filter</code> and <code>map</code> (and <code>reduce</code>) were changed to return
+iterator objects instead of lists.  This was done for performance
+reasons (better memory consumption, potential for lazy evaluation),
+but it has significant, unexpected, and sometimes hidden impacts to
+the surface functionality.
+</p>
+
+<p>
+It starts out similarly:
+</p>
+
+<pre class="example">
+ $ python
+ Python 3.8.6 (default, Sep 23 2020, 13:54:27)
+ [GCC 9.3.0] on linux
+ Type "help", "copyright", "credits" or "license" for more information.
+ &gt;&gt;&gt; a = [1,2,3]
+ &gt;&gt;&gt; b = []
+ &gt;&gt;&gt; len(a)
+ 3
+ &gt;&gt;&gt; a[1]
+ 2
+ &gt;&gt;&gt;
+</pre>
+
+<p>
+But using map or filter returns iterators:
+</p>
+
+<pre class="example">
+ &gt;&gt;&gt; map(chr, a)
+ &lt;map object at 0x7fcb0638f0a0&gt;
+ # Python 2: ['\x01', '\x02', '\x03']
+ &gt;&gt;&gt; map(chr, b)
+ &lt;map object at 0x7fcb0642cb80&gt;
+ # Python 2: []
+ &gt;&gt;&gt; filter(None, a)
+ &lt;filter object at 0x7fcb06417640&gt;
+ # Python 2: ['\x01', '\x02', '\x03']
+ &gt;&gt;&gt; filter(None, b)
+ &lt;filter object at 0x7fcb0642cc70&gt;
+ # Python 2: []
+</pre>
+
+<p>
+These iterator objects are <b>not</b> list containers:
+</p>
+
+<pre class="example">
+ &gt;&gt;&gt; map(chr, a)[1]
+ Traceback (most recent call last):
+   File "&lt;stdin&gt;", line 1, in &lt;module&gt;
+ TypeError: 'map' object is not subscriptable
+
+ &gt;&gt;&gt; len(filter(None, a))
+ Traceback (most recent call last):
+   File "&lt;stdin&gt;", line 1, in &lt;module&gt;
+ TypeError: object of type 'filter' has no len()
+ &gt;&gt;&gt; 
+</pre>
+
+<p>
+To use them with list functions, they must be converted back into lists:
+</p>
+
+<pre class="example">
+ &gt;&gt;&gt; list(map(chr, a))[1]
+ '\x02'
+ &gt;&gt;&gt; len(list(filter(None, a)))
+ 3
+ &gt;&gt;&gt;
+</pre>
+
+<p>
+This is one of the initial areas that caused problems when migrating
+from Python2 to Python3.  So far, this was a situation that generated
+<span class="underline">errors</span> (hopefully during your CI if your tests were thorough
+enough).  
+</p>
+
+<p>
+However, the truthiness of iterators also changes (because it's now a
+different object), but silently:
+</p>
+
+<pre class="example">
+ &gt;&gt;&gt; "non-empty" if map(chr, a) else "empty"
+ 'non-empty'
+ # same as Python 2
+ &gt;&gt;&gt; "non-empty" if map(chr, b) else "empty"
+ 'non-empty'
+ # Python 2: 'empty'  !!!
+ &gt;&gt;&gt;
+</pre>
+
+<p>
+Silent behavioral changes like this are hugely problematic.  Because
+these don't generate errors, your CI testing needs to be extremely
+thorough to catch this type of thing&#x2026; and I'm not sure many of us
+have that high of a level of confidence in the branch coverage of our
+tests.  In addition, I maintain that this is <span class="underline">unexpected and
+surprising</span> behavior to code readers.  Python has a long and broad
+history of truthiness for objects that many Python programmers are
+used to, but in my opinion this deviation here violates several of
+the Zen of Python mantras (PEP-20):
+</p>
+
+<ul class="org-ul">
+<li>"Readability counts."</li>
+<li>"Special cases aren't special enough to break the rules."</li>
+<li>"Errors should never pass silently."</li>
+<li>"There should be one&#x2013; and preferably only one &#x2013;obvious way to do it."</li>
+<li>"If the implementation is hard to explain, it's a bad idea."</li>
+</ul>
+
+<p>
+I realize that you might counter here with assertions like "these
+aren't actually errors" and "this makes total sense if you understand
+iterators" and you're technically correct, but my position is that
+these are subtle and therefore dangerous differences that lead to
+unintentional programmer mistakes&#x2026; which is counter to the raison
+d'être of Python.
+</p>
+
+<p>
+And it gets worse, as I shall demonstrate.
+</p>
+
+<p>
+Iterators do compose:
+</p>
+
+<pre class="example">
+ &gt;&gt;&gt; filter(None, map(chr, a))
+ &lt;filter object at 0x7fcb06383730&gt;
+ &gt;&gt;&gt;
+</pre>
+
+<p>
+which perpetuates the perception that they are just like lists, but
+this perception breaks down because it's limited to just a very few
+special functions:
+</p>
+
+<pre class="example">
+ &gt;&gt;&gt; len(filter(None, map(chr, a)))
+ Traceback (most recent call last):
+   File "&lt;stdin&gt;", line 1, in &lt;module&gt;
+ TypeError: object of type 'filter' has no len()
+ &gt;&gt;&gt; len(list(filter(None, map(chr, a))))
+ 3
+ &gt;&gt;&gt;
+</pre>
+
+<p>
+However, even though iterators are proxies for a list, they don't
+replicate all the functionality of the list.
+</p>
+
+<pre class="example">
+ &gt;&gt;&gt; whenNonEmpty = lambda l: l if l else "empty"
+ &gt;&gt;&gt; whenNonEmpty(a)
+ [1, 2, 3]
+ &gt;&gt;&gt; whenNonEmpty(b)
+ 'empty'
+
+ &gt;&gt;&gt; whenNonEmpty(filter(None, map(chr, a)))
+ &lt;filter object at 0x7fcb0642cc70&gt;
+ &gt;&gt;&gt; whenNonEmpty(filter(None, map(chr, b)))
+ &lt;filter object at 0x7fcb0633a580&gt;
+
+ &gt;&gt;&gt; list(whenNonEmpty(filter(None, map(chr, b))))
+ []    # &lt;&lt;&lt;----- what?!
+ &gt;&gt;&gt; list(whenNonEmpty(filter(None, map(chr, a))))
+ ['\x01', '\x02', '\x03']
+ &gt;&gt;&gt;
+</pre>
+
+<p>
+This is essentially the same thing shown previously: the <code>l</code>
+parameter to the <code>whenNonEmpty</code> is now an iterator, not a list, so
+it's <b>always</b> "truthy", but evaluating the iterator may return a
+false-ish object.
+</p>
+
+<p>
+At this point, the developer might be tempted to fix this in the
+<code>whenNonEmpty</code> lambda function, reasoning that the function should be
+made robust to whether it's getting a collection or an iterator:
+</p>
+
+<pre class="example">
+ &gt;&gt;&gt; whenNonEmptySafe = lambda l: list(l) if list(l) else "empty"
+</pre>
+
+<p>
+It's worth noting here that the benefits of having an iterator are
+nullified, or perhaps even result in a worse situation than Python 2:
+the input is now converted to a list twice, and these are likely to
+be separate lists.  Perhaps the duplication could have been avoided
+here via a local variable, but if <code>l</code> was passed to other functions
+that wanted to be similarly robust to lists v.s. iterators, they
+might create additional list copies themselves.  The result is an
+unknown number of lists, as compared to Python2 where a single list
+would have been passed around.  Furthermore, if the input <code>l</code> was
+already a list, another list is still created by this defensive code.
+</p>
+
+<p>
+However, there's an even worse issue hiding in this updated
+<code>whenNonEmptySafe</code> code:
+</p>
+
+<pre class="example">
+ &gt;&gt;&gt; whenNonEmptySafe(a)
+ [1, 2, 3]
+ &gt;&gt;&gt; whenNonEmptySafe(b)
+ 'empty'
+
+ &gt;&gt;&gt; whenNonEmptySafe(filter(None, map(chr, a)))
+ []
+ &gt;&gt;&gt; whenNonEmptySafe(filter(None, map(chr, b)))
+ 'empty'
+ &gt;&gt;&gt; 
+</pre>
+
+<p>
+The new <code>whenNonEmptySafe</code> fixed the result for the filtered and
+mapped <code>b</code>, but now the filtered and mapped <code>a</code> result is wrong!?!
+</p>
+
+<p>
+The problem here is that iterators <span class="underline">are not values</span>: they are
+suspended computations and when the computation is performed, there
+are side-effects.  The iterator computation is <b>not</b> idempotent and
+can only safely be performed once.
+</p>
+
+<p>
+In this case, the <code>... if list(l) ...</code> check in <code>whenNonEmptySafe</code>
+correctly converts the input to a list, and correctly determines if
+the list is empty (false-ish) or non-empty (truthy) for the if
+decision.  However, for the truthy branch, it then tries to return
+<code>list(l)</code>, but the iterator has already been consumed.  The iterator
+does not indicate that it has been consumed though by throwing an
+error, it simply returns a default value: the empty list.
+</p>
+
+<p>
+This is an extremely subtle behavior to decipher&#x2026; or even detect.
+Readers familiar with the distinction between iterators and
+collections from other languages will be generally unsurprised by
+this, but Python developers, while no less sophisticated, have a very
+different expectation of their language as informed by nearly every
+other part of that language.
+</p>
+
+<p>
+Here, the <code>whenNonEmptySafe</code> could be re-written to only perform the
+<code>list(l)</code> conversion a single time and result in the correct
+behavior, but if the caller <b>also</b> passed this iterator to a
+different function, that function would have no way to get the
+correct results of the iteration.  The only <span class="underline">safe</span> conclusion then is:
+</p>
+
+<ul class="org-ul">
+<li>That an iterator must be converted back to a collection at the
+generation point, and that it should never be passed to a function
+that is expecting a collection.</li>
+
+<li>Functions should <span class="underline">not</span> be written defensively, allowing for both
+iterators or collections, but should fail when provided an
+iterator (which is not the typical perspective for a "duck-typing"
+language).</li>
+</ul>
+
+<p>
+The original <code>whenNonEmpty</code> definition should be used like this:
+</p>
+
+<pre class="example">
+ &gt;&gt;&gt; whenNonEmpty(a)
+ [1, 2, 3]
+ &gt;&gt;&gt; whenNonEmpty(b)
+ 'empty'
+
+ &gt;&gt;&gt; whenNonEmpty(list(filter(None, map(chr, a))))
+ ['\x01', '\x02', '\x03']
+ &gt;&gt;&gt; whenNonEmpty(list(filter(None, map(chr, b))))
+ 'empty'
+ &gt;&gt;&gt; 
+</pre>
+
+<p>
+In conclusion, the iterators introduced in Python 3 as returns from
+<code>filter</code>, <code>map</code>, and <code>reduce</code> are often very dangerous and care
+should be taken when using them.
+</p>
+
+<p>
+This is probably why the <a href="https://portingguide.readthedocs.io/en/latest/iterators.html">Conservative Python 3 Porting Guide</a> contains
+the following:
+</p>
+
+<blockquote>
+<p>
+&#x2026; In these cases, the call can be rewritten using a list
+comprehension, making the code faster and more readable: &#x2026;
+</p>
+</blockquote>
+
+<p>
+To which I would add "and safer".  In addition, when porting from
+Python 2 to Python 3, the guide states
+</p>
+
+<blockquote>
+<p>
+When the recommneded fixers detect calls to <code>map()</code> or <code>filter()</code>,
+they add the imports <code>from six.moves import filter</code> or <code>from
+   six.moves import map</code> to the top of the file.
+</p>
+
+<p>
+In many cases the fixers do a good job discerning the different
+usages of <code>map()</code> and <code>filter()</code> and, if necessary, adding a call
+to <code>list()</code>.  But they are not perfect.  Always review the fixers'
+result with the above advice in mind.
+</p>
+</blockquote>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2020-12-19 Sat 17:40</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
