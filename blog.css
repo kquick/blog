@@ -1,7 +1,15 @@
       body {
-        color: #ffffcc;
-        background-color: #2e3436;
+        background-color: #ffffcc;
+        color: #101010;
         font-size: 14px;
+      }
+      h2 {
+          font-size: 140%;
+          color: #553333;
+      }
+      h3 {
+          font-size: 120%;
+          color: #553333;
       }
       .org-bold {
         /* bold */
@@ -1816,9 +1824,10 @@
     box-shadow: 3px 3px 3px #eee;
     padding: 8pt;
     font-family: monospace;
-    font-size: 140%;
+    font-size: 110%;
     overflow: auto;
     margin: 1.2em;
+    background-color: #777777;
   }
   pre.src {
     position: relative;
