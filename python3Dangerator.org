@@ -1,3 +1,4 @@
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="https://kquick.github.io/blog/blog.css>
 # Export via C-c C-e to html file.
 
 * Python 3 - Iterators should be called Dangerators

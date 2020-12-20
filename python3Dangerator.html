@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-12-19 Sat 17:40 -->
+<!-- 2020-12-19 Sat 22:31 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>&lrm;</title>
@@ -160,6 +160,19 @@
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -179,12 +192,13 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
+<link rel="stylesheet" type="text/css" href="https://kquick.github.io/blog/blog.css>
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -232,11 +246,11 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org1768fa9">1. Python 3 - Iterators should be called Dangerators</a>
+<li><a href="#org078e3fb">1. Python 3 - Iterators should be called Dangerators</a>
 <ul>
 <li>
 <ul>
-<li><a href="#orge7d2450">1.0.1. Enter Python 3:</a></li>
+<li><a href="#orgf4663d6">1.0.1. Enter Python 3:</a></li>
 </ul>
 </li>
 </ul>
@@ -244,25 +258,26 @@ for the JavaScript code in this tag.
 </ul>
 </div>
 </div>
-<div id="outline-container-org1768fa9" class="outline-2">
-<h2 id="org1768fa9"><span class="section-number-2">1</span> Python 3 - Iterators should be called Dangerators</h2>
+
+<div id="outline-container-org078e3fb" class="outline-2">
+<h2 id="org078e3fb"><span class="section-number-2">1</span> Python 3 - Iterators should be called Dangerators</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 In the old Python 2 days, working with lists was pleasant and easy:
 </p>
 
 <pre class="example">
- $ python
- Python 2.7.18 (default, Apr 19 2020, 21:45:35)
- [GCC 9.3.0] on linux2
- Type "help", "copyright", "credits" or "license" for more information.
- &gt;&gt;&gt; a = [1,2,3]
- &gt;&gt;&gt; b = []
- &gt;&gt;&gt; len(a)
- 3
- &gt;&gt;&gt; a[1]
- 2
- &gt;&gt;&gt;
+$ python
+Python 2.7.18 (default, Apr 19 2020, 21:45:35)
+[GCC 9.3.0] on linux2
+Type "help", "copyright", "credits" or "license" for more information.
+&gt;&gt;&gt; a = [1,2,3]
+&gt;&gt;&gt; b = []
+&gt;&gt;&gt; len(a)
+3
+&gt;&gt;&gt; a[1]
+2
+&gt;&gt;&gt;
 </pre>
 
 <p>
@@ -271,18 +286,18 @@ truthy for a non-empty list:
 </p>
 
 <pre class="example">
- &gt;&gt;&gt; "non-empty" if a else "empty"
- 'non-empty'
- &gt;&gt;&gt; "non-empty" if b else "empty"
- 'empty'
- &gt;&gt;&gt;
+&gt;&gt;&gt; "non-empty" if a else "empty"
+'non-empty'
+&gt;&gt;&gt; "non-empty" if b else "empty"
+'empty'
+&gt;&gt;&gt;
 
- &gt;&gt;&gt; whenNonEmpty = lambda l: l if l else "empty"
- &gt;&gt;&gt; whenNonEmpty(a)
- [1, 2, 3]
- &gt;&gt;&gt; whenNonEmpty(b)
- "empty"
- &gt;&gt;&gt;
+&gt;&gt;&gt; whenNonEmpty = lambda l: l if l else "empty"
+&gt;&gt;&gt; whenNonEmpty(a)
+[1, 2, 3]
+&gt;&gt;&gt; whenNonEmpty(b)
+"empty"
+&gt;&gt;&gt;
 </pre>
 
 <p>
@@ -291,15 +306,15 @@ lists, that work with empty and non-empty lists:
 </p>
 
 <pre class="example">
- &gt;&gt;&gt; map(chr, a)
- ['\x01', '\x02', '\x03']
- &gt;&gt;&gt; map(chr, b)
- []
+&gt;&gt;&gt; map(chr, a)
+['\x01', '\x02', '\x03']
+&gt;&gt;&gt; map(chr, b)
+[]
 
- &gt;&gt;&gt; filter(None, a)
- [1,2,3]
- &gt;&gt;&gt; filter(None, b)
- []
+&gt;&gt;&gt; filter(None, a)
+[1,2,3]
+&gt;&gt;&gt; filter(None, b)
+[]
 </pre>
 
 <p>
@@ -307,18 +322,18 @@ Note also that list comprehensions are equivalent to <code>map</code> and <code>
 </p>
 
 <pre class="example">
- &gt;&gt;&gt; map(chr, a)
- ['\x01', '\x02', '\x03']
- &gt;&gt;&gt; [ chr(x) for x in a ]
- ['\x01', '\x02', '\x03']
- &gt;&gt;&gt;
+&gt;&gt;&gt; map(chr, a)
+['\x01', '\x02', '\x03']
+&gt;&gt;&gt; [ chr(x) for x in a ]
+['\x01', '\x02', '\x03']
+&gt;&gt;&gt;
 
- &gt;&gt;&gt; filter(None, a)
- [1, 2, 3]
- &gt;&gt;&gt; [ x for x in a if x is not None ]
- [1, 2, 3]
- &gt;&gt;&gt;
- 
+&gt;&gt;&gt; filter(None, a)
+[1, 2, 3]
+&gt;&gt;&gt; [ x for x in a if x is not None ]
+[1, 2, 3]
+&gt;&gt;&gt;
+
 </pre>
 
 <p>
@@ -326,10 +341,10 @@ Combining these functions (composition) is also simple and easy:
 </p>
 
 <pre class="example">
- &gt;&gt;&gt; whenNonEmpty(filter(None, map(chr, a)))
- ['\x01', '\x02', '\x03']
- &gt;&gt;&gt; whenNonEmpty(filter(None, map(chr, b)))
- []
+&gt;&gt;&gt; whenNonEmpty(filter(None, map(chr, a)))
+['\x01', '\x02', '\x03']
+&gt;&gt;&gt; whenNonEmpty(filter(None, map(chr, b)))
+[]
 </pre>
 
 <p>
@@ -337,8 +352,8 @@ Life was good, things worked like one would expect.
 </p>
 </div>
 
-<div id="outline-container-orge7d2450" class="outline-4">
-<h4 id="orge7d2450"><span class="section-number-4">1.0.1</span> Enter Python 3:</h4>
+<div id="outline-container-orgf4663d6" class="outline-4">
+<h4 id="orgf4663d6"><span class="section-number-4">1.0.1</span> Enter Python 3:</h4>
 <div class="outline-text-4" id="text-1-0-1">
 <p>
 In Python3, <code>filter</code> and <code>map</code> (and <code>reduce</code>) were changed to return
@@ -353,17 +368,17 @@ It starts out similarly:
 </p>
 
 <pre class="example">
- $ python
- Python 3.8.6 (default, Sep 23 2020, 13:54:27)
- [GCC 9.3.0] on linux
- Type "help", "copyright", "credits" or "license" for more information.
- &gt;&gt;&gt; a = [1,2,3]
- &gt;&gt;&gt; b = []
- &gt;&gt;&gt; len(a)
- 3
- &gt;&gt;&gt; a[1]
- 2
- &gt;&gt;&gt;
+$ python
+Python 3.8.6 (default, Sep 23 2020, 13:54:27)
+[GCC 9.3.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+&gt;&gt;&gt; a = [1,2,3]
+&gt;&gt;&gt; b = []
+&gt;&gt;&gt; len(a)
+3
+&gt;&gt;&gt; a[1]
+2
+&gt;&gt;&gt;
 </pre>
 
 <p>
@@ -371,18 +386,18 @@ But using map or filter returns iterators:
 </p>
 
 <pre class="example">
- &gt;&gt;&gt; map(chr, a)
- &lt;map object at 0x7fcb0638f0a0&gt;
- # Python 2: ['\x01', '\x02', '\x03']
- &gt;&gt;&gt; map(chr, b)
- &lt;map object at 0x7fcb0642cb80&gt;
- # Python 2: []
- &gt;&gt;&gt; filter(None, a)
- &lt;filter object at 0x7fcb06417640&gt;
- # Python 2: ['\x01', '\x02', '\x03']
- &gt;&gt;&gt; filter(None, b)
- &lt;filter object at 0x7fcb0642cc70&gt;
- # Python 2: []
+&gt;&gt;&gt; map(chr, a)
+&lt;map object at 0x7fcb0638f0a0&gt;
+# Python 2: ['\x01', '\x02', '\x03']
+&gt;&gt;&gt; map(chr, b)
+&lt;map object at 0x7fcb0642cb80&gt;
+# Python 2: []
+&gt;&gt;&gt; filter(None, a)
+&lt;filter object at 0x7fcb06417640&gt;
+# Python 2: ['\x01', '\x02', '\x03']
+&gt;&gt;&gt; filter(None, b)
+&lt;filter object at 0x7fcb0642cc70&gt;
+# Python 2: []
 </pre>
 
 <p>
@@ -390,16 +405,16 @@ These iterator objects are <b>not</b> list containers:
 </p>
 
 <pre class="example">
- &gt;&gt;&gt; map(chr, a)[1]
- Traceback (most recent call last):
-   File "&lt;stdin&gt;", line 1, in &lt;module&gt;
- TypeError: 'map' object is not subscriptable
+&gt;&gt;&gt; map(chr, a)[1]
+Traceback (most recent call last):
+  File "&lt;stdin&gt;", line 1, in &lt;module&gt;
+TypeError: 'map' object is not subscriptable
 
- &gt;&gt;&gt; len(filter(None, a))
- Traceback (most recent call last):
-   File "&lt;stdin&gt;", line 1, in &lt;module&gt;
- TypeError: object of type 'filter' has no len()
- &gt;&gt;&gt; 
+&gt;&gt;&gt; len(filter(None, a))
+Traceback (most recent call last):
+  File "&lt;stdin&gt;", line 1, in &lt;module&gt;
+TypeError: object of type 'filter' has no len()
+&gt;&gt;&gt; 
 </pre>
 
 <p>
@@ -407,11 +422,11 @@ To use them with list functions, they must be converted back into lists:
 </p>
 
 <pre class="example">
- &gt;&gt;&gt; list(map(chr, a))[1]
- '\x02'
- &gt;&gt;&gt; len(list(filter(None, a)))
- 3
- &gt;&gt;&gt;
+&gt;&gt;&gt; list(map(chr, a))[1]
+'\x02'
+&gt;&gt;&gt; len(list(filter(None, a)))
+3
+&gt;&gt;&gt;
 </pre>
 
 <p>
@@ -427,13 +442,13 @@ different object), but silently:
 </p>
 
 <pre class="example">
- &gt;&gt;&gt; "non-empty" if map(chr, a) else "empty"
- 'non-empty'
- # same as Python 2
- &gt;&gt;&gt; "non-empty" if map(chr, b) else "empty"
- 'non-empty'
- # Python 2: 'empty'  !!!
- &gt;&gt;&gt;
+&gt;&gt;&gt; "non-empty" if map(chr, a) else "empty"
+'non-empty'
+# same as Python 2
+&gt;&gt;&gt; "non-empty" if map(chr, b) else "empty"
+'non-empty'
+# Python 2: 'empty'  !!!
+&gt;&gt;&gt;
 </pre>
 
 <p>
@@ -474,9 +489,9 @@ Iterators do compose:
 </p>
 
 <pre class="example">
- &gt;&gt;&gt; filter(None, map(chr, a))
- &lt;filter object at 0x7fcb06383730&gt;
- &gt;&gt;&gt;
+&gt;&gt;&gt; filter(None, map(chr, a))
+&lt;filter object at 0x7fcb06383730&gt;
+&gt;&gt;&gt;
 </pre>
 
 <p>
@@ -486,13 +501,13 @@ special functions:
 </p>
 
 <pre class="example">
- &gt;&gt;&gt; len(filter(None, map(chr, a)))
- Traceback (most recent call last):
-   File "&lt;stdin&gt;", line 1, in &lt;module&gt;
- TypeError: object of type 'filter' has no len()
- &gt;&gt;&gt; len(list(filter(None, map(chr, a))))
- 3
- &gt;&gt;&gt;
+&gt;&gt;&gt; len(filter(None, map(chr, a)))
+Traceback (most recent call last):
+  File "&lt;stdin&gt;", line 1, in &lt;module&gt;
+TypeError: object of type 'filter' has no len()
+&gt;&gt;&gt; len(list(filter(None, map(chr, a))))
+3
+&gt;&gt;&gt;
 </pre>
 
 <p>
@@ -501,22 +516,22 @@ replicate all the functionality of the list.
 </p>
 
 <pre class="example">
- &gt;&gt;&gt; whenNonEmpty = lambda l: l if l else "empty"
- &gt;&gt;&gt; whenNonEmpty(a)
- [1, 2, 3]
- &gt;&gt;&gt; whenNonEmpty(b)
- 'empty'
+&gt;&gt;&gt; whenNonEmpty = lambda l: l if l else "empty"
+&gt;&gt;&gt; whenNonEmpty(a)
+[1, 2, 3]
+&gt;&gt;&gt; whenNonEmpty(b)
+'empty'
 
- &gt;&gt;&gt; whenNonEmpty(filter(None, map(chr, a)))
- &lt;filter object at 0x7fcb0642cc70&gt;
- &gt;&gt;&gt; whenNonEmpty(filter(None, map(chr, b)))
- &lt;filter object at 0x7fcb0633a580&gt;
+&gt;&gt;&gt; whenNonEmpty(filter(None, map(chr, a)))
+&lt;filter object at 0x7fcb0642cc70&gt;
+&gt;&gt;&gt; whenNonEmpty(filter(None, map(chr, b)))
+&lt;filter object at 0x7fcb0633a580&gt;
 
- &gt;&gt;&gt; list(whenNonEmpty(filter(None, map(chr, b))))
- []    # &lt;&lt;&lt;----- what?!
- &gt;&gt;&gt; list(whenNonEmpty(filter(None, map(chr, a))))
- ['\x01', '\x02', '\x03']
- &gt;&gt;&gt;
+&gt;&gt;&gt; list(whenNonEmpty(filter(None, map(chr, b))))
+[]    # &lt;&lt;&lt;----- what?!
+&gt;&gt;&gt; list(whenNonEmpty(filter(None, map(chr, a))))
+['\x01', '\x02', '\x03']
+&gt;&gt;&gt;
 </pre>
 
 <p>
@@ -533,7 +548,7 @@ made robust to whether it's getting a collection or an iterator:
 </p>
 
 <pre class="example">
- &gt;&gt;&gt; whenNonEmptySafe = lambda l: list(l) if list(l) else "empty"
+&gt;&gt;&gt; whenNonEmptySafe = lambda l: list(l) if list(l) else "empty"
 </pre>
 
 <p>
@@ -555,16 +570,16 @@ However, there's an even worse issue hiding in this updated
 </p>
 
 <pre class="example">
- &gt;&gt;&gt; whenNonEmptySafe(a)
- [1, 2, 3]
- &gt;&gt;&gt; whenNonEmptySafe(b)
- 'empty'
+&gt;&gt;&gt; whenNonEmptySafe(a)
+[1, 2, 3]
+&gt;&gt;&gt; whenNonEmptySafe(b)
+'empty'
 
- &gt;&gt;&gt; whenNonEmptySafe(filter(None, map(chr, a)))
- []
- &gt;&gt;&gt; whenNonEmptySafe(filter(None, map(chr, b)))
- 'empty'
- &gt;&gt;&gt; 
+&gt;&gt;&gt; whenNonEmptySafe(filter(None, map(chr, a)))
+[]
+&gt;&gt;&gt; whenNonEmptySafe(filter(None, map(chr, b)))
+'empty'
+&gt;&gt;&gt; 
 </pre>
 
 <p>
@@ -622,16 +637,16 @@ The original <code>whenNonEmpty</code> definition should be used like this:
 </p>
 
 <pre class="example">
- &gt;&gt;&gt; whenNonEmpty(a)
- [1, 2, 3]
- &gt;&gt;&gt; whenNonEmpty(b)
- 'empty'
+&gt;&gt;&gt; whenNonEmpty(a)
+[1, 2, 3]
+&gt;&gt;&gt; whenNonEmpty(b)
+'empty'
 
- &gt;&gt;&gt; whenNonEmpty(list(filter(None, map(chr, a))))
- ['\x01', '\x02', '\x03']
- &gt;&gt;&gt; whenNonEmpty(list(filter(None, map(chr, b))))
- 'empty'
- &gt;&gt;&gt; 
+&gt;&gt;&gt; whenNonEmpty(list(filter(None, map(chr, a))))
+['\x01', '\x02', '\x03']
+&gt;&gt;&gt; whenNonEmpty(list(filter(None, map(chr, b))))
+'empty'
+&gt;&gt;&gt; 
 </pre>
 
 <p>
@@ -676,7 +691,7 @@ result with the above advice in mind.
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2020-12-19 Sat 17:40</p>
+<p class="date">Created: 2020-12-19 Sat 22:31</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
