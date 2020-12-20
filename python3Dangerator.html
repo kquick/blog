@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-12-19 Sat 22:59 -->
+<!-- 2020-12-19 Sat 23:36 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>&lrm;</title>
@@ -62,11 +62,11 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org5c22f91">1. Python 3 - Iterators should be called Dangerators</a>
+<li><a href="#orgb2c1264">1. Python 3 - Iterators should be called Dangerators</a>
 <ul>
 <li>
 <ul>
-<li><a href="#org81662fd">1.0.1. Enter Python 3:</a></li>
+<li><a href="#org8277738">1.0.1. Enter Python 3:</a></li>
 </ul>
 </li>
 </ul>
@@ -75,8 +75,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org5c22f91" class="outline-2">
-<h2 id="org5c22f91"><span class="section-number-2">1</span> Python 3 - Iterators should be called Dangerators</h2>
+<div id="outline-container-orgb2c1264" class="outline-2">
+<h2 id="orgb2c1264"><span class="section-number-2">1</span> Python 3 - Iterators should be called Dangerators</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 In the old Python 2 days, working with lists was pleasant and easy:
@@ -112,7 +112,7 @@ truthy for a non-empty list:
 &gt;&gt;&gt; whenNonEmpty(a)
 [1, 2, 3]
 &gt;&gt;&gt; whenNonEmpty(b)
-"empty"
+'empty'
 &gt;&gt;&gt;
 </pre>
 
@@ -160,7 +160,7 @@ Combining these functions (composition) is also simple and easy:
 &gt;&gt;&gt; whenNonEmpty(filter(None, map(chr, a)))
 ['\x01', '\x02', '\x03']
 &gt;&gt;&gt; whenNonEmpty(filter(None, map(chr, b)))
-[]
+'empty'
 </pre>
 
 <p>
@@ -168,8 +168,8 @@ Life was good, things worked like one would expect.
 </p>
 </div>
 
-<div id="outline-container-org81662fd" class="outline-4">
-<h4 id="org81662fd"><span class="section-number-4">1.0.1</span> Enter Python 3:</h4>
+<div id="outline-container-org8277738" class="outline-4">
+<h4 id="org8277738"><span class="section-number-4">1.0.1</span> Enter Python 3:</h4>
 <div class="outline-text-4" id="text-1-0-1">
 <p>
 In Python3, <code>filter</code> and <code>map</code> (and <code>reduce</code>) were changed to return
@@ -194,7 +194,6 @@ Type "help", "copyright", "credits" or "license" for more information.
 3
 &gt;&gt;&gt; a[1]
 2
-&gt;&gt;&gt;
 </pre>
 
 <p>
@@ -205,12 +204,15 @@ But using map or filter returns iterators:
 &gt;&gt;&gt; map(chr, a)
 &lt;map object at 0x7fcb0638f0a0&gt;
 # Python 2: ['\x01', '\x02', '\x03']
+
 &gt;&gt;&gt; map(chr, b)
 &lt;map object at 0x7fcb0642cb80&gt;
 # Python 2: []
+
 &gt;&gt;&gt; filter(None, a)
 &lt;filter object at 0x7fcb06417640&gt;
 # Python 2: ['\x01', '\x02', '\x03']
+
 &gt;&gt;&gt; filter(None, b)
 &lt;filter object at 0x7fcb0642cc70&gt;
 # Python 2: []
@@ -263,7 +265,7 @@ different object), but silently:
 # same as Python 2
 &gt;&gt;&gt; "non-empty" if map(chr, b) else "empty"
 'non-empty'
-# Python 2: 'empty'  !!!
+# Python 2: returned 'empty'  !!!
 &gt;&gt;&gt;
 </pre>
 
@@ -321,6 +323,7 @@ special functions:
 Traceback (most recent call last):
   File "&lt;stdin&gt;", line 1, in &lt;module&gt;
 TypeError: object of type 'filter' has no len()
+
 &gt;&gt;&gt; len(list(filter(None, map(chr, a))))
 3
 &gt;&gt;&gt;
@@ -344,7 +347,7 @@ replicate all the functionality of the list.
 &lt;filter object at 0x7fcb0633a580&gt;
 
 &gt;&gt;&gt; list(whenNonEmpty(filter(None, map(chr, b))))
-[]    # &lt;&lt;&lt;----- what?!
+[]    # &lt;&lt;&lt;----- should have been 'empty' !
 &gt;&gt;&gt; list(whenNonEmpty(filter(None, map(chr, a))))
 ['\x01', '\x02', '\x03']
 &gt;&gt;&gt;
@@ -507,7 +510,7 @@ result with the above advice in mind.
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2020-12-19 Sat 22:59</p>
+<p class="date">Created: 2020-12-19 Sat 23:36</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

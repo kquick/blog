@@ -33,7 +33,7 @@ truthy for a non-empty list:
  >>> whenNonEmpty(a)
  [1, 2, 3]
  >>> whenNonEmpty(b)
- "empty"
+ 'empty'
  >>>
  #+END_EXAMPLE
 
@@ -75,7 +75,7 @@ truthy for a non-empty list:
  >>> whenNonEmpty(filter(None, map(chr, a)))
  ['\x01', '\x02', '\x03']
  >>> whenNonEmpty(filter(None, map(chr, b)))
- []
+ 'empty'
  #+END_EXAMPLE
 
  Life was good, things worked like one would expect.
@@ -101,7 +101,6 @@ truthy for a non-empty list:
  3
  >>> a[1]
  2
- >>>
  #+END_EXAMPLE
 
  But using map or filter returns iterators:
@@ -110,12 +109,15 @@ truthy for a non-empty list:
  >>> map(chr, a)
  <map object at 0x7fcb0638f0a0>
  # Python 2: ['\x01', '\x02', '\x03']
+
  >>> map(chr, b)
  <map object at 0x7fcb0642cb80>
  # Python 2: []
+
  >>> filter(None, a)
  <filter object at 0x7fcb06417640>
  # Python 2: ['\x01', '\x02', '\x03']
+
  >>> filter(None, b)
  <filter object at 0x7fcb0642cc70>
  # Python 2: []
@@ -160,7 +162,7 @@ truthy for a non-empty list:
  # same as Python 2
  >>> "non-empty" if map(chr, b) else "empty"
  'non-empty'
- # Python 2: 'empty'  !!!
+ # Python 2: returned 'empty'  !!!
  >>>
  #+END_EXAMPLE
 
@@ -206,6 +208,7 @@ truthy for a non-empty list:
  Traceback (most recent call last):
    File "<stdin>", line 1, in <module>
  TypeError: object of type 'filter' has no len()
+
  >>> len(list(filter(None, map(chr, a))))
  3
  >>>
@@ -227,7 +230,7 @@ truthy for a non-empty list:
  <filter object at 0x7fcb0633a580>
 
  >>> list(whenNonEmpty(filter(None, map(chr, b))))
- []    # <<<----- what?!
+ []    # <<<----- should have been 'empty' !
  >>> list(whenNonEmpty(filter(None, map(chr, a))))
  ['\x01', '\x02', '\x03']
  >>>

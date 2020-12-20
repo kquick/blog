@@ -1,15 +1,19 @@
       body {
-        background-color: #ffffcc;
+        background-color: #fffefe;
         color: #101010;
-        font-size: 14px;
+        font-size: 24px;
+        font-family: Times New Roman, Arial, Helvetica, sans-serif;
       }
       h2 {
           font-size: 140%;
-          color: #553333;
+          color: #a52a2a;
       }
       h3 {
           font-size: 120%;
-          color: #553333;
+          color: #a52a2a;
+      }
+      h1,h4,h5 {
+          color: #a52a2a;
       }
       .org-bold {
         /* bold */
@@ -1809,7 +1813,7 @@
   .todo   { font-family: monospace; color: red; }
   .done   { font-family: monospace; color: green; }
   .priority { font-family: monospace; color: orange; }
-  .tag    { background-color: #eee; font-family: monospace;
+  .tag    { background-color: #eee; font-family: Courier New, Lucida Console, monospace;
             padding: 2px; font-size: 80%; font-weight: normal; }
   .timestamp { color: #bebebe; }
   .timestamp-kwd { color: #5f9ea0; }
@@ -1819,15 +1823,19 @@
   .underline { text-decoration: underline; }
   #postamble p, #preamble p { font-size: 90%; margin: .2em; }
   p.verse { margin-left: 3%; }
+  code {
+      font-family: Courier New, Lucida Console, monospace;
+      font-size: 90%;
+  }
   pre {
-    border: 1px solid #ccc;
-    box-shadow: 3px 3px 3px #eee;
+    border: 1px solid #111;
+    box-shadow: 3px 3px 3px #777;
     padding: 8pt;
-    font-family: monospace;
-    font-size: 110%;
+    font-family: Courier New, Lucida Console, monospace;
+    font-size: 80%;
     overflow: auto;
     margin: 1.2em;
-    background-color: #777777;
+    background-color: #efefdf;
   }
   pre.src {
     position: relative;
